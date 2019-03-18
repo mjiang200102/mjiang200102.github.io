@@ -1,0 +1,78 @@
+<div class="row">
+  <h3 class="col-md-12">
+    Search Stock&emsp;
+    <span
+      ><button class="btn btn-success" (click)="url_change()">
+        Confirm
+      </button></span
+    >
+  </h3>
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Symbol"
+    [(ngModel)]="stock_symbole"
+    (keyup)="searchTerm$.next($event.target.value)"
+    [ngModelOptions]="{ standalone: true }"
+  />
+  <ul *ngIf="searchresults">
+    <li *ngFor="let result of (searchresults | slice: 0:9)">
+      <a [routerLink]="['']" (click)="SelectGrid(result)"
+        >&nbsp;{{ result["1. symbol"] }}&emsp;{{ result["2. name"] }}</a
+      >
+    </li>
+  </ul>
+  <!-- <div class="col-md-6">
+    <ng-select
+      [allowClear]="true"
+      [items]="items"
+      [disabled]="disabled"
+      (data)="refreshValue($event)"
+      (selected)="selected($event)"
+      (removed)="removed($event)"
+      (keyup)="searchTerm$.next($event.target.value)"
+      placeholder="No Stock selected"
+    >
+    </ng-select>
+  </div>
+  <div class="col-md-6">
+    <pre>{{ value.text }}</pre>
+  </div>
+</div> -->
+
+  <!-- select bar -->
+  <div class="row">
+    <div class="col-md-12">
+      <card cardTitle="{{ company_name }}" isCollapse="true">
+        <div echarts [options]="options" class="demo-chart"></div>
+      </card>
+    </div>
+    <div class="col-md-12">
+      <card cardTitle="{{ company_name }} Daily Summary" isCollapse="true">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>date</th>
+              <th>open</th>
+              <th>high</th>
+              <th>low</th>
+              <th>close</th>
+              <th>volume</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of default_data">
+              <td>{{ item["0"] }}</td>
+              <td>{{ item["1"]["1. open"] | number: "1.2-2" }}</td>
+              <td>{{ item["1"]["2. high"] | number: "1.2-2" }}</td>
+              <td>{{ item["1"]["3. low"] | number: "1.2-2" }}</td>
+              <td>{{ item["1"]["4. close"] | number: "1.2-2" }}</td>
+              <td>{{ item["1"]["5. volume"] }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </card>
+    </div>
+    <!-- <td>{{ default_data?.data_code }}</td> -->
+  </div>
+</div>
